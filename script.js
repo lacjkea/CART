@@ -36,7 +36,13 @@ function showproduct(product) {
   pEl.textContent = product.price;
 
   btnEl = clone.querySelector("button");
-  btnEl.dataset.id += product._id;
+  // btnEl.dataset.id += product._id;
+
+  btnEl.addEventListener("click", () => {
+    // alert("hey");
+    // console.log(product);
+    CART.add(product);
+  });
 
   const productsEl = document.querySelector(".products");
   productsEl.appendChild(clone);
@@ -53,7 +59,7 @@ const CART = {
       //if there's anything there, turn it into JS objects, that we can access with the dot . notation
       CART.contents = JSON.parse(_contents);
     } else {
-      /* CART.contents = [
+      CART.contents = [
         {
           _id: "607f216322a6f434000e601e",
           img: "http://Kari.ca/",
@@ -75,7 +81,7 @@ const CART = {
           name: "Hej there",
           price: 500,
         },
-      ]; */
+      ];
     }
     //I want to update the
     //this.updateDOM(); //lacj!!! use this when we're not hardcoding the contents, and the content is read from localStorage
@@ -88,6 +94,8 @@ const CART = {
     CART.updateDOM();
   },
   updateDOM() {
+    const cartcontentEl = document.querySelector(".cart-content");
+    cartcontentEl.innerHTML = "";
     CART.contents.forEach((element) => {
       console.log(element);
 
@@ -107,9 +115,15 @@ const CART = {
       const priceEl = itemcopy.querySelector(".price-each span");
       priceEl.textContent = element.price;
 
-      const cartcontentEl = document.querySelector(".cart-content");
       cartcontentEl.appendChild(itemcopy);
     });
+  },
+  add(obj) {
+    console.log(obj);
+    console.log(CART.contents);
+    CART.contents.push(obj);
+    console.log(CART.contents);
+    this.sync();
   },
 };
 
