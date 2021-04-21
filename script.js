@@ -43,32 +43,49 @@ function showproduct(product) {
 }
 
 const CART = {
+  KEY: "basket",
   contents: [],
   init() {
-    CART.contents = [
-      {
-        _id: "607f216322a6f434000e601e",
-        img: "http://Kari.ca/",
-        qty: 5,
-        name: "Ut dolores",
-        price: 730,
-      },
-      {
-        _id: "2",
-        img: "nonoe",
-        qty: 3,
-        name: "Hej there",
-        price: 500,
-      },
-      {
-        _id: "2",
-        img: "nonoe",
-        qty: 2,
-        name: "Hej there",
-        price: 500,
-      },
-    ];
-    this.updateDOM();
+    //_contents is a temporary string
+    let _contents = localStorage.getItem(CART.KEY);
+
+    if (_contents) {
+      //if there's anything there, turn it into JS objects, that we can access with the dot . notation
+      CART.contents = JSON.parse(_contents);
+    } else {
+      /* CART.contents = [
+        {
+          _id: "607f216322a6f434000e601e",
+          img: "http://Kari.ca/",
+          qty: 5,
+          name: "Ut dolores",
+          price: 730,
+        },
+        {
+          _id: "2",
+          img: "nonoe",
+          qty: 3,
+          name: "Hej there",
+          price: 500,
+        },
+        {
+          _id: "2",
+          img: "nonoe",
+          qty: 2,
+          name: "Hej there",
+          price: 500,
+        },
+      ]; */
+    }
+    //I want to update the
+    //this.updateDOM(); //lacj!!! use this when we're not hardcoding the contents, and the content is read from localStorage
+    CART.sync();
+  },
+  sync() {
+    //turn CART contents array of objects into a string that we can write in localStorage
+    let _cart = JSON.stringify(CART.contents);
+    localStorage.setItem(CART.KEY, _cart);
+    CART.updateDOM();
   },
   updateDOM() {
     CART.contents.forEach((element) => {
