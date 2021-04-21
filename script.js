@@ -24,7 +24,7 @@ function showproducts(data) {
 
 //loop
 function showproduct(product) {
-  console.log(product);
+  //   console.log(product);
   const tempProd = document.querySelector("#product-template").content;
 
   const clone = tempProd.cloneNode(true);
@@ -41,3 +41,50 @@ function showproduct(product) {
   const productsEl = document.querySelector(".products");
   productsEl.appendChild(clone);
 }
+
+const contents = [
+  {
+    _id: "607f216322a6f434000e601e",
+    img: "http://Kari.ca/",
+    qty: 5,
+    name: "Ut dolores",
+    price: 730,
+  },
+  {
+    _id: "2",
+    img: "nonoe",
+    qty: 3,
+    name: "Hej there",
+    price: 500,
+  },
+  {
+    _id: "2",
+    img: "nonoe",
+    qty: 2,
+    name: "Hej there",
+    price: 500,
+  },
+];
+
+contents.forEach((element) => {
+  console.log(element);
+
+  const tempItem = document.querySelector("#cart-item-template").content;
+  const itemcopy = tempItem.cloneNode(true);
+
+  const labelEl = itemcopy.querySelector("label");
+  labelEl.textContent = element.name;
+  labelEl.setAttribute("for", element.name);
+
+  const inputEl = itemcopy.querySelector("input");
+  inputEl.id += element.id;
+  inputEl.name = element.name;
+
+  inputEl.value = element.qty;
+
+  const priceEl = itemcopy.querySelector(".price-each span");
+  priceEl.textContent = element.price;
+
+  const cartcontentEl = document.querySelector(".cart-content");
+  cartcontentEl.appendChild(itemcopy);
+});

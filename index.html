@@ -73,30 +73,27 @@
           <button>Add item</button>
         </article> -->
       </section>
-
+      <template id="cart-item-template">
+        <div class="cart-item">
+          <label for="ID">NAME</label>
+          <input
+            type="number"
+            name="NAME"
+            id="fid-"
+            min="0"
+            max="20"
+            maxlength="2"
+          />
+          <p class="price-row">DKK<span></span></p>
+          <p class="price-each">DKK<span></span> each</p>
+        </div></template
+      >
       <aside class="cart">
         <form action="#">
           <div class="cart-content">
             <h2>THE CART IS EMPTY</h2>
-            <div class="cart-item">
-              <label for="ID">NAME</label>
-              <input type="number" id="ID" min="0" max="20" />
-              <p class="price-row">DKK<span></span></p>
-              <p class="price-each">DKK<span></span> each</p>
-            </div>
-            <div class="cart-item">
-              <label for="ID">NAME</label>
-              <input type="number" id="ID" min="0" max="20" />
-              <p class="price-row">DKK<span></span></p>
-              <p class="price-each">DKK<span></span> each</p>
-            </div>
-            <div class="cart-item">
-              <label for="ID">NAME</label>
-              <input type="number" id="ID" min="0" max="20" />
-              <p class="price-row">DKK<span></span></p>
-              <p class="price-each">DKK<span></span> each</p>
-            </div>
           </div>
+          <!-- .END .cart-content-->
           <button type="submit">Checkout & pay</button>
         </form>
       </aside>
