@@ -75,7 +75,7 @@ const CART = {
           price: 500,
         },
         {
-          _id: "2",
+          _id: "3",
           img: "nonoe",
           qty: 2,
           name: "Hej there",
@@ -102,13 +102,14 @@ const CART = {
       const tempItem = document.querySelector("#cart-item-template").content;
       const itemcopy = tempItem.cloneNode(true);
 
+      const id = element._id;
       const labelEl = itemcopy.querySelector("label");
       labelEl.textContent = element.name;
-      labelEl.setAttribute("for", element.name);
+      labelEl.setAttribute("for", "fid-" + id);
 
       const inputEl = itemcopy.querySelector("input");
-      inputEl.id += element.id;
-      inputEl.name = element.name;
+      inputEl.id += id;
+      inputEl.name += id;
 
       inputEl.value = element.qty;
 
@@ -120,6 +121,7 @@ const CART = {
   },
   add(obj) {
     console.log(obj);
+    obj.qty = 1;
     console.log(CART.contents);
     CART.contents.push(obj);
     console.log(CART.contents);
