@@ -5,3 +5,20 @@
 img {
   max-width: 100%;
 }
+
+body {
+  margin: 0;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+}
+
+.products {
+  background: red;
+}
+.cart {
+  background: hotpink;
+}
