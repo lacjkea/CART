@@ -32,7 +32,7 @@ function showproduct(product) {
   const h2El = clone.querySelector("h2");
   h2El.textContent = product.name;
 
-  const pEl = document.querySelector("p");
+  const pEl = clone.querySelector("p");
   pEl.textContent = product.price;
 
   btnEl = clone.querySelector("button");
