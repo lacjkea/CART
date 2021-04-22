@@ -97,7 +97,7 @@ const CART = {
     const cartcontentEl = document.querySelector(".cart-content");
     cartcontentEl.innerHTML = "";
     CART.contents.forEach((element) => {
-      console.log(element);
+      // console.log(element);
 
       const tempItem = document.querySelector("#cart-item-template").content;
       const itemcopy = tempItem.cloneNode(true);
@@ -110,8 +110,19 @@ const CART = {
       const inputEl = itemcopy.querySelector("input");
       inputEl.id += id;
       inputEl.name += id;
-
       inputEl.value = element.qty;
+
+      inputEl.addEventListener("blur", () => {
+        const itemQty = inputEl.valueAsNumber;
+        element.qty = itemQty;
+        console.log("element");
+        console.log(element);
+        CART.update(element);
+      });
+
+      inputEl.addEventListener("focus", (e) => {
+        e.target.select();
+      });
 
       const priceEl = itemcopy.querySelector(".price-each span");
       priceEl.textContent = element.price;
@@ -132,6 +143,15 @@ const CART = {
 
     console.log(CART.contents);
     this.sync();
+  },
+  update(obj) {
+    //find the index of the object
+    const index = CART.contents.findIndex((element) => element._id == obj._id);
+    //we'll have to read the data from the input field
+    /* const inputEl = document.querySelector("#fid-" + obj._id);
+    CART.contents[index].qty = inputEl.valueAsNumber; */
+    CART.contents[index].qty = obj.qty;
+    CART.sync();
   },
 };
 
