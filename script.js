@@ -120,10 +120,16 @@ const CART = {
     });
   },
   add(obj) {
-    console.log(obj);
-    obj.qty = 1;
-    console.log(CART.contents);
-    CART.contents.push(obj);
+    const index = CART.contents.findIndex((element) => element._id == obj._id);
+    if (index == -1) {
+      console.log(obj);
+      obj.qty = 1;
+      console.log(CART.contents);
+      CART.contents.push(obj);
+    } else {
+      CART.contents[index].qty += 1;
+    }
+
     console.log(CART.contents);
     this.sync();
   },
