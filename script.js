@@ -55,7 +55,7 @@ const CART = {
     //_contents is a temporary string
     let _contents = localStorage.getItem(CART.KEY);
 
-    if (_contents) {
+    if (_contents.length == 0) {
       //if there's anything there, turn it into JS objects, that we can access with the dot . notation
       CART.contents = JSON.parse(_contents);
     } else {
@@ -96,39 +96,45 @@ const CART = {
   updateDOM() {
     const cartcontentEl = document.querySelector(".cart-content");
     cartcontentEl.innerHTML = "";
-    CART.contents.forEach((element) => {
-      // console.log(element);
 
-      const tempItem = document.querySelector("#cart-item-template").content;
-      const itemcopy = tempItem.cloneNode(true);
+    //If we have an empty array / an array with the length of 0
+    if (CART.contents.length === 0) {
+      cartcontentEl.innerHTML = "<h4>The cart is empty</h4>";
+    } else {
+      CART.contents.forEach((element) => {
+        // console.log(element);
 
-      const id = element._id;
-      const labelEl = itemcopy.querySelector("label");
-      labelEl.textContent = element.name;
-      labelEl.setAttribute("for", "fid-" + id);
+        const tempItem = document.querySelector("#cart-item-template").content;
+        const itemcopy = tempItem.cloneNode(true);
 
-      const inputEl = itemcopy.querySelector("input");
-      inputEl.id += id;
-      inputEl.name += id;
-      inputEl.value = element.qty;
+        const id = element._id;
+        const labelEl = itemcopy.querySelector("label");
+        labelEl.textContent = element.name;
+        labelEl.setAttribute("for", "fid-" + id);
 
-      inputEl.addEventListener("blur", () => {
-        const itemQty = inputEl.valueAsNumber;
-        element.qty = itemQty;
-        console.log("element");
-        console.log(element);
-        CART.update(element);
+        const inputEl = itemcopy.querySelector("input");
+        inputEl.id += id;
+        inputEl.name += id;
+        inputEl.value = element.qty;
+
+        inputEl.addEventListener("input", () => {
+          const itemQty = inputEl.valueAsNumber;
+          element.qty = itemQty;
+          console.log("element");
+          console.log(element);
+          CART.update(element);
+        });
+
+        inputEl.addEventListener("focus", (e) => {
+          e.target.select();
+        });
+
+        const priceEl = itemcopy.querySelector(".price-each span");
+        priceEl.textContent = element.price;
+
+        cartcontentEl.appendChild(itemcopy);
       });
-
-      inputEl.addEventListener("focus", (e) => {
-        e.target.select();
-      });
-
-      const priceEl = itemcopy.querySelector(".price-each span");
-      priceEl.textContent = element.price;
-
-      cartcontentEl.appendChild(itemcopy);
-    });
+    }
   },
   add(obj) {
     const index = CART.contents.findIndex((element) => element._id == obj._id);
@@ -140,17 +146,25 @@ const CART = {
     } else {
       CART.contents[index].qty += 1;
     }
-
     console.log(CART.contents);
     this.sync();
   },
   update(obj) {
     //find the index of the object
     const index = CART.contents.findIndex((element) => element._id == obj._id);
-    //we'll have to read the data from the input field
-    /* const inputEl = document.querySelector("#fid-" + obj._id);
+
+    //If the qty is 0 we'll remove from the CART.contens array of objects, so that it's nol onger show in the cart
+    if (obj.qty === 0) {
+      //The splice() method changes the contents of an array by removing or replacing existing elements and/or adding new elements in place -- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
+      //1. parameter start (index in the array), 2. paramter: how many? - here 1
+      CART.contents.splice(index, 1);
+    } else {
+      //we'll have to read the data from the input field
+      /* const inputEl = document.querySelector("#fid-" + obj._id);
     CART.contents[index].qty = inputEl.valueAsNumber; */
-    CART.contents[index].qty = obj.qty;
+      CART.contents[index].qty = obj.qty;
+    }
+
     CART.sync();
   },
 };
