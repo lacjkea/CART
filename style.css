@@ -26,12 +26,32 @@ main {
 .products article {
   background: yellowgreen;
 }
+
 .cart {
   background: hotpink;
 }
 
+button {
+  cursor: pointer;
+  transition: 0.3s background-color;
+}
+button:hover {
+  background-color: yellowgreen;
+}
+
+/* hide built-in spin buttons on the number type - https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  /*   -webkit-appearance: none;
-  margin: 0; */
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+/* END built-in spin hide */
+
+input[type="number"] {
+  text-align: center;
 }

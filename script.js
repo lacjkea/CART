@@ -112,6 +112,11 @@ const CART = {
         labelEl.textContent = element.name;
         labelEl.setAttribute("for", "fid-" + id);
 
+        const minusBtn = itemcopy.querySelector(".minus");
+        minusBtn.addEventListener("click", () => {
+          CART.minusOne(id);
+        });
+
         const inputEl = itemcopy.querySelector("input");
         inputEl.id += id;
         inputEl.name += id;
@@ -120,13 +125,18 @@ const CART = {
         inputEl.addEventListener("input", () => {
           const itemQty = inputEl.valueAsNumber;
           element.qty = itemQty;
-          console.log("element");
-          console.log(element);
+          /*  console.log("element");
+          console.log(element); */
           CART.update(element);
         });
 
         inputEl.addEventListener("focus", (e) => {
           e.target.select();
+        });
+
+        const plusBtn = itemcopy.querySelector(".plus");
+        plusBtn.addEventListener("click", () => {
+          CART.plusOne(id);
         });
 
         const priceEl = itemcopy.querySelector(".price-each span");
@@ -166,6 +176,18 @@ const CART = {
     }
 
     CART.sync();
+  },
+  minusOne(id) {
+    const indexObj = CART.contents.find((element) => element._id == id);
+    indexObj.qty--;
+    console.log(indexObj);
+    CART.update(indexObj);
+  },
+  plusOne(id) {
+    const indexObj = CART.contents.find((element) => element._id == id);
+    indexObj.qty++;
+    console.log(indexObj);
+    CART.update(indexObj);
   },
 };
 

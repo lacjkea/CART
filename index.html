@@ -78,14 +78,16 @@
       <template id="cart-item-template">
         <div class="cart-item">
           <label for="fid-">NAME</label>
+          <button class="minus" type="button">-</button>
           <input type="number" name="NAME-" id="fid-" min="0" max="20" />
+          <button class="plus" type="button">+</button>
           <p class="price-row">DKK<span></span></p>
           <p class="price-each">DKK<span></span> each</p>
         </div>
       </template>
       <aside class="cart">
         <h3>Shopping Cart</h3>
-        <form action="">
+        <form>
           <div class="cart-content">
             <h4>THE CART IS EMPTY</h4>
           </div>
